@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "OCR Screen",
+  "version": "0.0.1",
+
+  "description": "OCR for web browser screen",
+  "icons": {
+  },
+  "author": "joe-re",
+  "browser_action": {
+    "default_icon": "image/camera.png",
+    "default_title": "OCR"
+  },
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}
