@@ -1,0 +1,17 @@
+{
+  "name": "ocr-screen",
+  "version": "0.0.1",
+  "description": "This is a chrome extention to allow you to do ocr openiong browser screen.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ocr",
+    "javascript",
+    "chrome",
+    "extension"
+  ],
+  "author": "joe-re",
+  "license": "GPL-3.0"
+}
