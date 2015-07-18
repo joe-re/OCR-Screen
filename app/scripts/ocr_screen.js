@@ -1,8 +1,9 @@
 import AnalizableViewer from './components/analizable_viewer';
 import React from 'react';
 
-window.setScreenshotUrl = (url) =>
+window.setScreenshotUrl = (url) => {
   React.render(
-    <AnalizableViewer imageUrl={url}/>,
+    <AnalizableViewer initialImageUrl={url}/>,
     document.body
   );
+}
