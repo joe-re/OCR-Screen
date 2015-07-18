@@ -24,7 +24,7 @@ gulp.task 'build', ->
 
   browserify
       entries: ["./#{@path.app}/scripts/ocr_screen.js"]
-      extensions: ['.js']
+      extensions: ['.js', '.jsx']
     .transform(babelify)
     .bundle()
     .pipe source 'bundle.js'
