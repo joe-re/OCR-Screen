@@ -1,38 +1,12 @@
 import React from 'react';
 
 class OcrResultView extends React.Component {
-  filter(image, r, g, b) {
-    let canvas = this.createCanvas(image);
+  analizeOcr(filteredImage) {
+    let canvas = this.createCanvas(filteredImage);
     let context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0);
-    let src = context.getImageData(0, 0, canvas.width, canvas.height);
-    let dst = context.createImageData(canvas.width, canvas.height);
-    let i = 0;
-    let whiteCount = 0;
-    let blackCount = 0;
-    while(i < src.data.length) {
-      if((src.data[i] > r - 25 && src.data[i] < r + 25) &&
-         (src.data[i + 1] > g - 25 && src.data[i + 1] < g + 25) &&
-        (src.data[i + 2] > b - 25 && src.data[i + 2] < b + 25)) {
-        dst.data[i]     = 0;  // R
-        dst.data[i + 1] = 0;  // G
-        dst.data[i + 2] = 0;  // B
-        dst.data[i + 3] = src.data[i + 3];        // A
-        whiteCount++;
-      } else {
-        dst.data[i]     = 255;
-        dst.data[i + 1] = 255;
-        dst.data[i + 2] = 255;
-        dst.data[i + 3] = src.data[i + 3];        // A
-        blackCount++;
-      }
-      i += 4;
-    }
-    context.putImageData(dst, 0, 0);
-    image.src = canvas.toDataURL();
-    return image;
+    context.drawImage(filteredImage, 0, 0);
+    return OCRAD(canvas);
   }
-
   createCanvas(image) {
     let canvas = document.createElement('canvas');
     canvas.height = image.height;
@@ -40,15 +14,22 @@ class OcrResultView extends React.Component {
     return canvas;
   }
   render() {
-    let r = this.props.analizableImage.r(this.props.selectedPos.x, this.props.selectedPos.y);
-    let g = this.props.analizableImage.g(this.props.selectedPos.x, this.props.selectedPos.y);
-    let b = this.props.analizableImage.b(this.props.selectedPos.x, this.props.selectedPos.y);
-    let filteredImage = this.filter(this.props.analizableImage.getImage(), r, g, b);
+    let filteredImage, ocrResault;
+    if (this.props.selectedPos.x > 0 && this.props.selectedPos.y) {
+      filteredImage = this.props.filteredImage.getFilteredImage(this.props.selectedPos);
+      ocrResault = this.analizeOcr(filteredImage);
+    } else {
+      filteredImage = this.props.filteredImage.getImage();
+      ocrResault = '';
+    }
     let style = { display: 'none' };
     return (
-      <img src={filteredImage.src} style={style}></img>
+      <div>
+        <div>OCR Result: {ocrResault}</div>
+        <img src={filteredImage.src} style={style}></img>
+      </div>
     );
   }
 }
 
-export default FilteredView;
+export default OcrResultView;

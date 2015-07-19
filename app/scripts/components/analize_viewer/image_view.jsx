@@ -5,7 +5,7 @@ require('jcrop');
 
 class ImageView extends React.Component {
   trimStart() {
-    var jcropApi = null;
+    let jcropApi = null;
     let showCoords = (c) => {
       jcropApi.destroy();
       let canvas = document.createElement('canvas');
