@@ -5,7 +5,13 @@ class OcrResultView extends React.Component {
     let canvas = this.createCanvas(filteredImage);
     let context = canvas.getContext('2d');
     context.drawImage(filteredImage, 0, 0);
-    return OCRAD(canvas);
+    let ocrResult = '';
+    try {
+      ocrResult = OCRAD(canvas)
+    } catch(e) {
+      window.alert('OCR failed. Please try again after triming image.');
+    }
+    return ocrResult;
   }
   createCanvas(image) {
     let canvas = document.createElement('canvas');
