@@ -25,6 +25,7 @@
   "dependencies": {
     "jcrop": "0.0.1",
     "jquery": "^2.1.4",
+    "ocrad.js": "0.0.1",
     "react": "^0.13.3"
   }
 }

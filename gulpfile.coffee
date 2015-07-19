@@ -22,6 +22,11 @@ gulp.task 'build', ->
   gulp.src "#{@path.app}/ocr-screen.html"
     .pipe gulp.dest("#{@path.dist}")
 
+  # ocrad.js is builed old emscripten version. so we can't use 'require' by broeserify.
+  # https://github.com/defunctzombie/node-process/pull/40
+  gulp.src 'node_modules/ocrad.js/ocrad.js'
+    .pipe gulp.dest("#{@path.dist}/")
+
   browserify
       entries: ["./#{@path.app}/scripts/ocr_screen.js"]
       extensions: ['.js', '.jsx']
