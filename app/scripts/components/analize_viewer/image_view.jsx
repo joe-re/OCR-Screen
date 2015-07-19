@@ -17,15 +17,20 @@ class ImageView extends React.Component {
       image.src = this.props.imageUrl;
       context.drawImage(image, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
       this.props.handleImageChanged(canvas.toDataURL());
-    }
+    };
     $('img').Jcrop(
       { onSelect: showCoords }, function() { jcropApi = this; }
     );
   }
+  mouseMoveHandler(e) {
+    e = e.nativeEvent;
+    let pos = { x: parseInt(e.offsetX), y: parseInt(e.offsetY) };
+    this.props.handlePosChanged(pos);
+  }
   render() {
     return (
-      <img src={this.props.imageUrl} onClick={this.trimStart.bind(this)}></img>
-    )
+      <img src={this.props.imageUrl} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)}></img>
+    );
   }
 
 }
