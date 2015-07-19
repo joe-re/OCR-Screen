@@ -10,28 +10,27 @@ class AnalizableViewer extends React.Component {
     let image = new Image();
     image.src = this.props.initialImageUrl;
     this.state = {
-      imageUrl: this.props.initialImageUrl,
+      image: image,
       analizableImage: new AnalizableImage(image),
       pos: {x: 0, y: 0}
     };
   }
   handlePosChanged(pos) {
-    console.log(pos);
     this.setState({pos: pos});
   }
   handleImageChanged(imageUrl) {
     let image = new Image();
     image.src = imageUrl;
     this.setState({
-      imageUrl: imageUrl,
-      analizableImage: image
+      image: image,
+      analizableImage: new AnalizableImage(image)
     });
   }
   render() {
     return (
       <div>
       <ColorPicker analizableImage={this.state.analizableImage} pos={this.state.pos}></ColorPicker>
-      <ImageView imageUrl={this.state.imageUrl} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)}></ImageView>
+      <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)}></ImageView>
       </div>
     );
   }

@@ -7,15 +7,12 @@ class ImageView extends React.Component {
   trimStart() {
     var jcropApi = null;
     let showCoords = (c) => {
-      console.log(jcropApi);
       jcropApi.destroy();
       let canvas = document.createElement('canvas');
       canvas.height = c.h;
       canvas.width = c.w;
       let context = canvas.getContext('2d');
-      let image = new Image();
-      image.src = this.props.imageUrl;
-      context.drawImage(image, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
+      context.drawImage(this.props.image, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
       this.props.handleImageChanged(canvas.toDataURL());
     };
     $('img').Jcrop(
@@ -28,8 +25,12 @@ class ImageView extends React.Component {
     this.props.handlePosChanged(pos);
   }
   render() {
+    let style = {
+      width: `${this.props.image.width}`,
+      height: `${this.props.image.height}`
+    };
     return (
-      <img src={this.props.imageUrl} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)}></img>
+      <img src={this.props.image.src} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)} style={style}></img>
     );
   }
 
