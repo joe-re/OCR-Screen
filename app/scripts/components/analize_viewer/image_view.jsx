@@ -15,7 +15,8 @@ class ImageView extends React.Component {
       context.drawImage(this.props.image, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
       this.props.handleImageChanged(canvas.toDataURL());
     };
-    $('img').Jcrop(
+    let image = React.findDOMNode(this.refs.image);
+    $(image).Jcrop(
       { onSelect: showCoords }, function() { jcropApi = this; }
     );
   }
@@ -35,7 +36,10 @@ class ImageView extends React.Component {
       height: `${this.props.image.height}`
     };
     return (
-      <img src={this.props.image.src} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)} onClick={this.clickHandler.bind(this)} style={style}></img>
+      <div>
+        <button onClick={this.trimStart.bind(this)}>Trimming!</button>
+        <img src={this.props.image.src} onMouseMove={this.mouseMoveHandler.bind(this)} onClick={this.clickHandler.bind(this)} style={style} ref="image"></img>
+      </div>
     );
   }
 
