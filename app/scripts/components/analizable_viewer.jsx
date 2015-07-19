@@ -13,7 +13,6 @@ class AnalizableViewer extends React.Component {
       image: image,
       analizableImage: new AnalizableImage(image),
       pos: {x: 0, y: 0},
-      selectedPos: {x: -1, y: -1},
       ocrResult: ''
     };
     this.analyzing = false;
@@ -23,13 +22,14 @@ class AnalizableViewer extends React.Component {
   }
   handleImageClicked(pos) {
     if (this.analyzing) { return; }
-    this.setState({selectedPos: pos});
     Promise.resolve().then(()=> {
       this.analyzing = true;
-      return this.state.analizableImage.analizeOcr(pos)
+      let ocrResult = this.state.analizableImage.analizeOcr(pos);
+      return ocrResult;
     }).then((ocrResult)=> {
       this.setState({ocrResult: ocrResult});
-    }).catch(function() {
+    }).catch(()=> {
+      this.setState({analizableImage: new AnalizableImage(this.state.image), ocrResult: ''});
       window.alert('OCR failed. Please try again after triming image.');
     }).then(()=>{
       this.analyzing = false;

@@ -1,8 +1,9 @@
 let id = 100;
+let urls = [];
 
 chrome.browserAction.onClicked.addListener(function() {
   chrome.tabs.captureVisibleTab(function(screenshotUrl) {
-    let viewTabUrl = chrome.extension.getURL('ocr-screen.html?id=' + id++)
+    let viewTabUrl = chrome.extension.getURL('ocr-screen.html?id=' + id);
     let targetId = null;
 
     chrome.tabs.onUpdated.addListener(function listener(tabId, changedProps) {
@@ -15,7 +16,8 @@ chrome.browserAction.onClicked.addListener(function() {
       for (let i = 0; i < views.length; i++) {
         let view = views[i];
         if (view.location.href == viewTabUrl) {
-          view.setScreenshotUrl(screenshotUrl);
+          urls.push({ id: id, url: screenshotUrl });
+          id++;
           break;
         }
       }
@@ -26,3 +28,11 @@ chrome.browserAction.onClicked.addListener(function() {
     });
   });
 });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    sendResponse(urls);
+  }
+);
+
+
