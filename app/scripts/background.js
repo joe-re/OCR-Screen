@@ -34,8 +34,9 @@ chrome.runtime.onMessage.addListener(
     for (let item of store) {
       if (item.id === request) {
         sendResponse(item);
-        break;
+        return;
       }
     }
+    sendResponse(null);
   }
 );

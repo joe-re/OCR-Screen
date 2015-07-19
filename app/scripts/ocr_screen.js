@@ -12,12 +12,19 @@ function getQueryParams() {
 }
 
 window.onload = function() {
+  console.log('o');
   chrome.runtime.sendMessage(parseInt(getQueryParams().id),
     function(response) {
-      React.render(
-        <AnalizableViewer initialImageUrl={response.url}/>,
-        document.getElementById('content')
-      );
+      if(response === null) {
+        window.setTimeout(function() {
+          window.location.reload()
+        }, 1000);
+      } else {
+        React.render(
+          <AnalizableViewer initialImageUrl={response.url}/>,
+          document.getElementById('content')
+        );
+      }
     }
   );
 };
