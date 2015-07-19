@@ -11,19 +11,13 @@ function getQueryParams() {
     return params;
 }
 
-console.log(getQueryParams());
 window.onload = function() {
-  chrome.runtime.sendMessage(getQueryParams(),
+  chrome.runtime.sendMessage(parseInt(getQueryParams().id),
     function(response) {
-      console.log(response);
-      for (let item of response) {
-        if (item.id === parseInt(getQueryParams().id)) {
-          React.render(
-            <AnalizableViewer initialImageUrl={item.url}/>,
-            document.getElementById('content')
-          );
-        }
-      }
+      React.render(
+        <AnalizableViewer initialImageUrl={response.url}/>,
+        document.getElementById('content')
+      );
     }
   );
 };

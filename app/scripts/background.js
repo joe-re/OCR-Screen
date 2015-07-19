@@ -1,5 +1,5 @@
 let id = 100;
-let urls = [];
+let store = [];
 
 chrome.browserAction.onClicked.addListener(function() {
   chrome.tabs.captureVisibleTab(function(screenshotUrl) {
@@ -16,7 +16,7 @@ chrome.browserAction.onClicked.addListener(function() {
       for (let i = 0; i < views.length; i++) {
         let view = views[i];
         if (view.location.href == viewTabUrl) {
-          urls.push({ id: id, url: screenshotUrl });
+          store.push({ id: id, url: screenshotUrl });
           id++;
           break;
         }
@@ -31,8 +31,11 @@ chrome.browserAction.onClicked.addListener(function() {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    sendResponse(urls);
+    for (let item of store) {
+      if (item.id === request) {
+        sendResponse(item);
+        break;
+      }
+    }
   }
 );
-
-
