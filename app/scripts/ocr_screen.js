@@ -4,6 +4,6 @@ import React from 'react';
 window.setScreenshotUrl = (url) => {
   React.render(
     <AnalizableViewer initialImageUrl={url}/>,
-    document.body
+    document.getElementById('content')
   );
 }
