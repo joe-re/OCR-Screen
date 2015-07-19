@@ -5,17 +5,13 @@ class ColorPicker extends React.Component {
     let r = this.props.analizableImage.r(this.props.pos.x, this.props.pos.y);
     let g = this.props.analizableImage.g(this.props.pos.x, this.props.pos.y);
     let b = this.props.analizableImage.b(this.props.pos.x, this.props.pos.y);
-    let colorStyle = {
-      backgroundColor: `rgb(${r},${g},${b})`,
-      width: '20px',
-      height: '20px'
-    };
+    let colorStyle = { backgroundColor: `rgb(${r},${g},${b})` };
     return (
       <div>
         <input type={'text'} size={'3'} value={r}></input>
         <input type={'text'} size={'3'} value={g}></input>
         <input type={'text'} size={'3'} value={b}></input>
-        <div style={colorStyle}></div>
+        <div className='color-box' style={colorStyle}></div>
       </div>
     );
   }

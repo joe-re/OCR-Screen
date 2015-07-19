@@ -25,7 +25,10 @@ class OcrResultView extends React.Component {
     let style = { display: 'none' };
     return (
       <div>
-        <div>OCR Result: {ocrResault}</div>
+        <div>
+          <div className='head-line'>OCR Result</div>
+          <input className='ocr-result' type='text' value={ocrResault}></input>
+        </div>
         <img src={filteredImage.src} style={style}></img>
       </div>
     );
