@@ -2,6 +2,7 @@ import React from 'react';
 import ImageView from './analize_viewer/image_view';
 import ColorPicker from './analize_viewer/color_picker';
 import AnalizableImage from '../models/analizable_image';
+import FilteredView from './analize_viewer/filtered_view';
 window.AnalizableImage = AnalizableImage;
 
 class AnalizableViewer extends React.Component {
