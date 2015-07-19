@@ -13,11 +13,15 @@ class AnalizableViewer extends React.Component {
     this.state = {
       image: image,
       analizableImage: new AnalizableImage(image),
-      pos: {x: 0, y: 0}
+      pos: {x: 0, y: 0},
+      selectedPos: {x: 0, y: 0}
     };
   }
   handlePosChanged(pos) {
     this.setState({pos: pos});
+  }
+  handleImageClicked(pos) {
+    this.setState({selectedPos: pos});
   }
   handleImageChanged(imageUrl) {
     let image = new Image();
@@ -31,7 +35,8 @@ class AnalizableViewer extends React.Component {
     return (
       <div>
       <ColorPicker analizableImage={this.state.analizableImage} pos={this.state.pos}></ColorPicker>
-      <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)}></ImageView>
+      <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
+      <FilteredView analizableImage={this.state.analizableImage} selectedPos={this.state.selectedPos}></FilteredView>
       </div>
     );
   }

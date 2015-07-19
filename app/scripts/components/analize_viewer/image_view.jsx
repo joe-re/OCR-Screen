@@ -24,13 +24,18 @@ class ImageView extends React.Component {
     let pos = { x: parseInt(e.offsetX), y: parseInt(e.offsetY) };
     this.props.handlePosChanged(pos);
   }
+  clickHandler(e) {
+    e = e.nativeEvent;
+    let pos = { x: parseInt(e.offsetX), y: parseInt(e.offsetY) };
+    this.props.handleImageClicked(pos);
+  }
   render() {
     let style = {
       width: `${this.props.image.width}`,
       height: `${this.props.image.height}`
     };
     return (
-      <img src={this.props.image.src} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)} style={style}></img>
+      <img src={this.props.image.src} onClick={this.trimStart.bind(this)} onMouseMove={this.mouseMoveHandler.bind(this)} onClick={this.clickHandler.bind(this)} style={style}></img>
     );
   }
 

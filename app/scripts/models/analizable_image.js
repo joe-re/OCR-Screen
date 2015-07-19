@@ -1,8 +1,13 @@
 class AnalizableImage {
   constructor(img) {
-    console.log(img);
+    this.image = img;
     this.canvas = this.createCanvas(img);
     this.colors = this.analyze(this.canvas, img);
+  }
+  getImage() {
+    let image = new Image();
+    image.src = this.image.src;
+    return image;
   }
   r(x, y) { return this.colors[this.calcStartPoint(x, y)]; }
   g(x, y) { return this.colors[this.calcStartPoint(x, y) + 1]; }

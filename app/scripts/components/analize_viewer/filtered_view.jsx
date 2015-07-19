@@ -2,6 +2,7 @@ import React from 'react';
 
 class FilteredView extends React.Component {
   filter(image, r, g, b) {
+    console.log(image);
     let canvas = this.createCanvas(image);
     let context = canvas.getContext('2d');
     context.drawImage(image, 0, 0);
@@ -43,7 +44,12 @@ class FilteredView extends React.Component {
   }
 
   render() {
-    let filteredImage = this.filter(this.props.image, this.props.r, this.props.g, this.props.b);
+    console.log(this.props);
+    let r = this.props.analizableImage.r(this.props.selectedPos.x, this.props.selectedPos.y);
+    let g = this.props.analizableImage.g(this.props.selectedPos.x, this.props.selectedPos.y);
+    let b = this.props.analizableImage.b(this.props.selectedPos.x, this.props.selectedPos.y);
+    let filteredImage = this.filter(this.props.analizableImage.getImage(), r, g, b);
+    console.log(this.props);
     return (
       <img src={filteredImage.src}></img>
     );
