@@ -1,6 +1,6 @@
 import React from 'react';
 
-class FilteredView extends React.Component {
+class OcrResultView extends React.Component {
   filter(image, r, g, b) {
     let canvas = this.createCanvas(image);
     let context = canvas.getContext('2d');
@@ -39,14 +39,14 @@ class FilteredView extends React.Component {
     canvas.width = image.width;
     return canvas;
   }
-
   render() {
     let r = this.props.analizableImage.r(this.props.selectedPos.x, this.props.selectedPos.y);
     let g = this.props.analizableImage.g(this.props.selectedPos.x, this.props.selectedPos.y);
     let b = this.props.analizableImage.b(this.props.selectedPos.x, this.props.selectedPos.y);
     let filteredImage = this.filter(this.props.analizableImage.getImage(), r, g, b);
+    let style = { display: 'none' };
     return (
-      <img src={filteredImage.src}></img>
+      <img src={filteredImage.src} style={style}></img>
     );
   }
 }

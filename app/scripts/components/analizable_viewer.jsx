@@ -2,8 +2,7 @@ import React from 'react';
 import ImageView from './analize_viewer/image_view';
 import ColorPicker from './analize_viewer/color_picker';
 import AnalizableImage from '../models/analizable_image';
-import FilteredView from './analize_viewer/filtered_view';
-window.AnalizableImage = AnalizableImage;
+import OcrResultView from './analize_viewer/ocr_result_view';
 
 class AnalizableViewer extends React.Component {
   constructor(props) {
@@ -34,9 +33,9 @@ class AnalizableViewer extends React.Component {
   render() {
     return (
       <div>
-      <ColorPicker analizableImage={this.state.analizableImage} pos={this.state.pos}></ColorPicker>
-      <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
-      <FilteredView analizableImage={this.state.analizableImage} selectedPos={this.state.selectedPos}></FilteredView>
+        <FilteredView analizableImage={this.state.analizableImage} selectedPos={this.state.selectedPos}></FilteredView>
+        <ColorPicker analizableImage={this.state.analizableImage} pos={this.state.pos}></ColorPicker>
+        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
       </div>
     );
   }
