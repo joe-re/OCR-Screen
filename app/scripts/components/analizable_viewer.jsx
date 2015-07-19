@@ -29,8 +29,8 @@ class AnalizableViewer extends React.Component {
     }).then((ocrResult)=> {
       this.setState({ocrResult: ocrResult});
     }).catch(()=> {
-      this.setState({analizableImage: new AnalizableImage(this.state.image), ocrResult: ''});
       window.alert('OCR failed. Please try again after triming image.');
+      window.location.reload();
     }).then(()=>{
       this.analyzing = false;
     });
