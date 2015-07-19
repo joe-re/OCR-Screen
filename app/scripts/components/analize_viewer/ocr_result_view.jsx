@@ -1,18 +1,6 @@
 import React from 'react';
 
 class OcrResultView extends React.Component {
-  analizeOcr(filteredImage) {
-    let canvas = this.createCanvas(filteredImage);
-    let context = canvas.getContext('2d');
-    context.drawImage(filteredImage, 0, 0);
-    let ocrResult = '';
-    try {
-      ocrResult = OCRAD(canvas)
-    } catch(e) {
-      window.alert('OCR failed. Please try again after triming image.');
-    }
-    return ocrResult;
-  }
   createCanvas(image) {
     let canvas = document.createElement('canvas');
     canvas.height = image.height;
@@ -20,22 +8,13 @@ class OcrResultView extends React.Component {
     return canvas;
   }
   render() {
-    let filteredImage, ocrResault;
-    if (this.props.selectedPos.x > 0 && this.props.selectedPos.y) {
-      filteredImage = this.props.filteredImage.getFilteredImage(this.props.selectedPos);
-      ocrResault = this.analizeOcr(filteredImage);
-    } else {
-      filteredImage = this.props.filteredImage.getImage();
-      ocrResault = '';
-    }
     let style = { display: 'none' };
     return (
       <div>
         <div>
           <div className='head-line'>OCR Result</div>
-          <input className='ocr-result' type='text' value={ocrResault}></input>
+          <input className='ocr-result' type='text' value={this.props.ocrResault}></input>
         </div>
-        <img src={filteredImage.src} style={style}></img>
       </div>
     );
   }

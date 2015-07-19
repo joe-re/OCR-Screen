@@ -62,7 +62,16 @@ class AnalizableImage {
     return image;
   }
 
-
+  analizeOcr(pos) {
+    const filteredImage = this.getFilteredImage(pos);
+    let canvas = this.createCanvas(filteredImage);
+    let context = canvas.getContext('2d');
+    context.drawImage(filteredImage, 0, 0);
+    return Promise.resolve()
+    .then(()=> {
+      return OCRAD(canvas);
+    });
+  }
 }
 
 export default AnalizableImage;
