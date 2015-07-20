@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/app_dispatcher';
 import AnalyzableViewerConstants from '../constants/analyze_viewer_constants';
-import {EventEmitter} from 'event';
+import {EventEmitter} from 'events';
 
 let _state = {};
 const CHANGE_EVENT = 'change';

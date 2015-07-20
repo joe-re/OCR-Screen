@@ -23,7 +23,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "event": "^1.0.0",
+    "events": "^1.0.2",
     "flux": "^2.0.3",
     "jcrop": "0.0.1",
     "jquery": "^2.1.4",
