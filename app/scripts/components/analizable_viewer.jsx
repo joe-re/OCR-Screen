@@ -36,21 +36,12 @@ class AnalizableViewer extends React.Component {
     AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
   }
 
-  handleImageChanged(imageUrl) {
-    let image = new Image();
-    image.src = imageUrl;
-    this.setState({
-      image: image,
-      analyzableImage: new AnalizableImage(image)
-    });
-  }
-
   render() {
     return (
       <div>
         <OcrResultView ocrResault={this.state.ocrResult}></OcrResultView>
         <ColorPicker color={this.state.color}></ColorPicker>
-        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)}></ImageView>
+        <ImageView image={this.state.image}></ImageView>
       </div>
     );
   }
