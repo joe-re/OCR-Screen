@@ -28,6 +28,7 @@
     "jcrop": "0.0.1",
     "jquery": "^2.1.4",
     "keymirror": "^0.1.1",
+    "object-assign": "^3.0.0",
     "ocrad.js": "0.0.1",
     "react": "^0.13.3"
   }

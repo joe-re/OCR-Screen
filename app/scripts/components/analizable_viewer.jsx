@@ -3,19 +3,31 @@ import ImageView from './analize_viewer/image_view';
 import ColorPicker from './analize_viewer/color_picker';
 import AnalizableImage from '../models/analizable_image';
 import OcrResultView from './analize_viewer/ocr_result_view';
+import AnalyzableViewerStore from '../stores/analyzable_viewer_store';
+import AnalyzableViewerAction from '../actions/analyzable_viewer_action';
+
+function getState() {
+  return AnalyzableViewerStore.getState();
+}
 
 class AnalizableViewer extends React.Component {
+  componentDidMount() {
+    AnalyzableViewerStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    AnalyzableViewerStore.removeChangeListener(this._onChange);
+  }
+
+  _onChange() {
+    this.setState(getState());
+    console.log(this.state);
+  }
+
   constructor(props) {
     super(props);
-    let image = new Image();
-    image.src = this.props.initialImageUrl;
-    this.state = {
-      image: image,
-      analizableImage: new AnalizableImage(image),
-      pos: {x: 0, y: 0},
-      ocrResult: ''
-    };
-    this.analyzing = false;
+    this.state = getState();
+    AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
   }
   handlePosChanged(pos) {
     this.setState({pos: pos});
@@ -24,7 +36,7 @@ class AnalizableViewer extends React.Component {
     if (this.analyzing) { return; }
     Promise.resolve().then(()=> {
       this.analyzing = true;
-      let ocrResult = this.state.analizableImage.analizeOcr(pos);
+      let ocrResult = this.state.analyzableImage.analizeOcr(pos);
       return ocrResult;
     }).then((ocrResult)=> {
       this.setState({ocrResult: ocrResult});
@@ -40,14 +52,14 @@ class AnalizableViewer extends React.Component {
     image.src = imageUrl;
     this.setState({
       image: image,
-      analizableImage: new AnalizableImage(image)
+      analyzableImage: new AnalizableImage(image)
     });
   }
   render() {
     return (
       <div>
         <OcrResultView ocrResault={this.state.ocrResult}></OcrResultView>
-        <ColorPicker analizableImage={this.state.analizableImage} pos={this.state.pos}></ColorPicker>
+        <ColorPicker analyzableImage={this.state.analyzableImage} pos={this.state.pos}></ColorPicker>
         <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
       </div>
     );
