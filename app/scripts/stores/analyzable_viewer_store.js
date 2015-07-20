@@ -6,9 +6,10 @@ import assign from 'object-assign';
 
 let _state = {
   image: null,
-  analyzable_image: null,
+  analyzableImage: null,
   pos: {x: 0, y: 0},
-  ocrResult: ''
+  ocrResult: '',
+  color: {r: 0, g: 0, b: 0}
 };
 
 const CHANGE_EVENT = 'change';
@@ -17,7 +18,7 @@ function updateImage(imageUrl) {
   let image = new Image();
   image.src = imageUrl;
   _state.image = image;
-  _state.analyzable_image = new AnalizableImage(image);
+  _state.analyzableImage = new AnalizableImage(image);
 }
 
 function cropImage(c) {
@@ -25,12 +26,17 @@ function cropImage(c) {
    canvas.height = c.h;
    canvas.width = c.w;
    let context = canvas.getContext('2d');
-   context.drawImage(_state.image.src, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
+   context.drawImage(_state.image, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
    updateImage(canvas.toDataURL());
 }
 
 function changePos(pos) {
   _state.pos = pos;
+  _state.color = {
+    r: _state.analyzableImage.r(pos.x, pos.y),
+    g: _state.analyzableImage.g(pos.x, pos.y),
+    b: _state.analyzableImage.b(pos.x, pos.y)
+  }
 }
 
 function analyzeOcr(pos) {

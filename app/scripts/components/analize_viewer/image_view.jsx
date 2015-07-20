@@ -1,5 +1,5 @@
 import React from 'react';
-import AnalyzableViewerAction from '../actions/analyzable_viewer_action';
+import AnalyzableViewerAction from '../../actions/analyzable_viewer_action';
 
 let $;
 window.jQuery = $ = require('jquery');

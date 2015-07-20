@@ -12,7 +12,6 @@ function getQueryParams() {
 }
 
 window.onload = function() {
-  console.log('o');
   chrome.runtime.sendMessage(parseInt(getQueryParams().id),
     function(response) {
       if(response === null) {

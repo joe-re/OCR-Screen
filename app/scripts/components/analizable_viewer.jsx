@@ -12,11 +12,11 @@ function getState() {
 
 class AnalizableViewer extends React.Component {
   componentDidMount() {
-    AnalyzableViewerStore.addChangeListener(this._onChange);
+    AnalyzableViewerStore.addChangeListener(this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    AnalyzableViewerStore.removeChangeListener(this._onChange);
+    AnalyzableViewerStore.removeChangeListener(this._onChange.bind(this));
   }
 
   _onChange() {
@@ -58,8 +58,8 @@ class AnalizableViewer extends React.Component {
     return (
       <div>
         <OcrResultView ocrResault={this.state.ocrResult}></OcrResultView>
-        <ColorPicker analyzableImage={this.state.analyzableImage} pos={this.state.pos}></ColorPicker>
-        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handlePosChanged={this.handlePosChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
+        <ColorPicker color={this.state.color}></ColorPicker>
+        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
       </div>
     );
   }
