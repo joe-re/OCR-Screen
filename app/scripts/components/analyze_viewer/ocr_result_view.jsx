@@ -7,7 +7,7 @@ class OcrResultView extends React.Component {
       <div>
         <div>
           <div className='head-line'>OCR Result</div>
-          <input className='ocr-result' type='text' value={this.props.ocrResault}></input>
+          <input className='ocr-result' type='text' value={this.props.ocrResault} readOnly></input>
         </div>
       </div>
     );
