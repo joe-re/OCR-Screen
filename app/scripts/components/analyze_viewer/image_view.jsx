@@ -1,12 +1,7 @@
 import React from 'react';
 import AnalyzableViewerAction from '../../actions/analyzable_viewer_action';
 
-let $;
-window.jQuery = $ = require('jquery');
-require('jcrop');
-
 class ImageView extends React.Component {
-
   trimStart() {
     let jcropApi = null;
     let showCoords = (c) => {

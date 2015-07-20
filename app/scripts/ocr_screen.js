@@ -1,5 +1,10 @@
 import AnalyzableViewer from './components/analyzable_viewer';
 import React from 'react';
+import jQuery from 'jquery';
+
+// jcrop require global jQuery Object.
+if(!window.jQuery) { window.jQuery = window.$ = jQuery; }
+require('jcrop');
 
 function getQueryParams() {
     let params = {};
