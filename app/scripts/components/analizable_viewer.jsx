@@ -21,7 +21,6 @@ class AnalizableViewer extends React.Component {
 
   _onChange() {
     this.setState(getState());
-    console.log(this.state);
   }
 
   constructor(props) {
@@ -29,9 +28,11 @@ class AnalizableViewer extends React.Component {
     this.state = getState();
     AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
   }
+
   handlePosChanged(pos) {
     this.setState({pos: pos});
   }
+
   handleImageClicked(pos) {
     if (this.analyzing) { return; }
     Promise.resolve().then(()=> {
@@ -42,11 +43,12 @@ class AnalizableViewer extends React.Component {
       this.setState({ocrResult: ocrResult});
     }).catch(()=> {
       window.alert('OCR failed. Please try again after triming image.');
-      window.location.reload();
+      window.location.reload(); // This is to resolve OCRAD of memory leak error.I haven't been able to find the cause and solution...
     }).then(()=>{
       this.analyzing = false;
     });
   }
+
   handleImageChanged(imageUrl) {
     let image = new Image();
     image.src = imageUrl;
@@ -55,6 +57,7 @@ class AnalizableViewer extends React.Component {
       analyzableImage: new AnalizableImage(image)
     });
   }
+
   render() {
     return (
       <div>
