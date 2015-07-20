@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/app_dispatcher';
 import AnalyzableViewerConstants from '../constants/analyze_viewer_constants';
 
-const AnalizableViewerAction = {
+const AnalyzableViewerAction = {
   updateImage: function(imageUrl) {
     AppDispatcher.dispatch({
       actionType: AnalyzableViewerConstants.UPDATE_IMAGE,
@@ -31,4 +31,4 @@ const AnalizableViewerAction = {
   }
 };
 
-export default AnalizableViewerAction;
+export default AnalyzableViewerAction;

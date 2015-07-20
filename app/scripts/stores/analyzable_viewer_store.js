@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/app_dispatcher';
 import AnalyzableViewerConstants from '../constants/analyze_viewer_constants';
 import {EventEmitter} from 'events';
-import AnalizableImage from '../models/analizable_image';
+import AnalyzableImage from '../models/analyzable_image';
 import assign from 'object-assign';
 
 let _state = {
@@ -21,7 +21,7 @@ function updateImage(imageUrl) {
   let image = new Image();
   image.src = imageUrl;
   _state.image = image;
-  _state.analyzableImage = new AnalizableImage(image);
+  _state.analyzableImage = new AnalyzableImage(image);
 }
 
 function cropImage(c) {
@@ -46,7 +46,7 @@ function analyzeOcr(pos) {
   if (_analyzing) { return Promise.resolve(); }
   return Promise.resolve().then(()=> {
     _analyzing = true;
-    const ocrResult = _state.analyzableImage.analizeOcr(pos);
+    const ocrResult = _state.analyzableImage.analyzeOcr(pos);
     return ocrResult;
   }).then(function (ocrResult) {
     _analyzing = false;

@@ -1,4 +1,4 @@
-import AnalizableViewer from './components/analizable_viewer';
+import AnalyzableViewer from './components/analyzable_viewer';
 import React from 'react';
 
 function getQueryParams() {
@@ -20,7 +20,7 @@ window.onload = function() {
         }, 1000);
       } else {
         React.render(
-          <AnalizableViewer initialImageUrl={response.url}/>,
+          <AnalyzableViewer initialImageUrl={response.url}/>,
           document.getElementById('content')
         );
       }

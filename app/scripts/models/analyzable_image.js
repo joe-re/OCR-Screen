@@ -1,4 +1,4 @@
-class AnalizableImage {
+class AnalyzableImage {
   constructor(img) {
     this.image = img;
     this.canvas = this.createCanvas(img);
@@ -62,7 +62,7 @@ class AnalizableImage {
     return image;
   }
 
-  analizeOcr(pos) {
+  analyzeOcr(pos) {
     return Promise.resolve()
     .then(()=> {
       const filteredImage = this.getFilteredImage(pos);
@@ -74,4 +74,4 @@ class AnalizableImage {
   }
 }
 
-export default AnalizableImage;
+export default AnalyzableImage;
