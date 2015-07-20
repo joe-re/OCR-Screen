@@ -1,23 +1,34 @@
+import Color from './color';
+
 class AnalyzableImage {
   constructor(img) {
     this.image = img;
     this.canvas = this.createCanvas(img);
     this.colors = this.analyze(this.canvas, img);
   }
+
   getImage() {
     let image = new Image();
     image.src = this.image.src;
     return image;
   }
-  r(x, y) { return this.colors[this.calcStartPoint(x, y)]; }
-  g(x, y) { return this.colors[this.calcStartPoint(x, y) + 1]; }
-  b(x, y) { return this.colors[this.calcStartPoint(x, y) + 2]; }
+
+  getColor(x, y) {
+    return new Color(
+      this.colors[this.calcStartPoint(x, y)],
+      this.colors[this.calcStartPoint(x, y) + 1],
+      this.colors[this.calcStartPoint(x, y) + 2]
+    );
+  }
+
   calcStartPoint(x, y) { return ((y * this.canvas.width) + x) * 4; }
+
   analyze(canvas, img) {
     let context = canvas.getContext('2d');
     context.drawImage(img, 0, 0);
     return context.getImageData(0, 0, img.width, img.height).data;
   }
+
   createCanvas(img) {
     let canvas = document.createElement('canvas');
     canvas.height = img.height;
@@ -26,9 +37,7 @@ class AnalyzableImage {
   }
 
   getFilteredImage(pos) {
-    const r = this.r(pos.x, pos.y);
-    const g = this.g(pos.x, pos.y);
-    const b = this.b(pos.x, pos.y);
+    const color = this.getColor(pos.x, pos.y);
     let image = this.getImage();
 
     let canvas = this.createCanvas(image);
@@ -40,21 +49,12 @@ class AnalyzableImage {
     let whiteCount = 0;
     let blackCount = 0;
     while(i < src.data.length) {
-      if((src.data[i] > r - 25 && src.data[i] < r + 25) &&
-         (src.data[i + 1] > g - 25 && src.data[i + 1] < g + 25) &&
-        (src.data[i + 2] > b - 25 && src.data[i + 2] < b + 25)) {
-        dst.data[i]     = 0;  // R
-        dst.data[i + 1] = 0;  // G
-        dst.data[i + 2] = 0;  // B
-        dst.data[i + 3] = src.data[i + 3];        // A
-        whiteCount++;
-      } else {
-        dst.data[i]     = 255;
-        dst.data[i + 1] = 255;
-        dst.data[i + 2] = 255;
-        dst.data[i + 3] = src.data[i + 3];        // A
-        blackCount++;
-      }
+      const compared = new Color(src.data[i], src.data[i + 1], src.data[i + 2]);
+      const fillColor = color.isSimilar(compared) ? Color.BLACK : Color.WHITE;
+      dst.data[i]     = fillColor.r;
+      dst.data[i + 1] = fillColor.g;
+      dst.data[i + 2] = fillColor.b;
+      dst.data[i + 3] = src.data[i + 3]; // Alpha Property
       i += 4;
     }
     context.putImageData(dst, 0, 0);

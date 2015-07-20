@@ -2,6 +2,7 @@ import AppDispatcher from '../dispatcher/app_dispatcher';
 import AnalyzableViewerConstants from '../constants/analyze_viewer_constants';
 import {EventEmitter} from 'events';
 import AnalyzableImage from '../models/analyzable_image';
+import Color from '../models/color';
 import assign from 'object-assign';
 
 let _state = {
@@ -9,7 +10,7 @@ let _state = {
   analyzableImage: null,
   pos: {x: 0, y: 0},
   ocrResult: '',
-  color: {r: 0, g: 0, b: 0}
+  color: new Color()
 };
 
 let _analyzing = false;
@@ -35,11 +36,7 @@ function cropImage(c) {
 
 function changePos(pos) {
   _state.pos = pos;
-  _state.color = {
-    r: _state.analyzableImage.r(pos.x, pos.y),
-    g: _state.analyzableImage.g(pos.x, pos.y),
-    b: _state.analyzableImage.b(pos.x, pos.y)
-  }
+  _state.color = _state.analyzableImage.getColor(pos.x, pos.y);
 }
 
 function analyzeOcr(pos) {
