@@ -9,10 +9,9 @@ const AnalizableViewerAction = {
     });
   },
 
-  cropImage: function(srcImageUrl, c) {
+  cropImage: function(c) {
     AppDispatcher.dispatch({
       actionType: AnalyzableViewerConstants.CROP_IMAGE,
-      srcImageUrl: srcImageUrl,
       c: c
     });
   },

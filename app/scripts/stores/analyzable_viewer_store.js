@@ -20,7 +20,13 @@ function updateImage(imageUrl) {
   _state.analyzable_image = new AnalizableImage(image);
 }
 
-function cropImage(srcImageUrl, c) {
+function cropImage(c) {
+   let canvas = document.createElement('canvas');
+   canvas.height = c.h;
+   canvas.width = c.w;
+   let context = canvas.getContext('2d');
+   context.drawImage(_state.image.src, c.x, c.y, c.w, c.h, 0, 0, c.w, c.h);
+   updateImage(canvas.toDataURL());
 }
 
 function changePos(pos) {
@@ -55,7 +61,7 @@ AppDispatcher.register(function(action) {
     break;
 
   case AnalyzableViewerConstants.CROP_IMAGE:
-    cropImage(action.srcImageUrl, action.c);
+    cropImage(action.c);
     AnalyzeViewerStore.emitChange();
     break;
 
