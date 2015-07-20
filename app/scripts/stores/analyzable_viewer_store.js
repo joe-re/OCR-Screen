@@ -12,7 +12,10 @@ let _state = {
   color: {r: 0, g: 0, b: 0}
 };
 
+let _analyzing = false;
+
 const CHANGE_EVENT = 'change';
+const FAIL_OCR_EVENT = 'fail_ocr';
 
 function updateImage(imageUrl) {
   let image = new Image();
@@ -40,6 +43,18 @@ function changePos(pos) {
 }
 
 function analyzeOcr(pos) {
+  if (_analyzing) { return Promise.resolve(); }
+  return Promise.resolve().then(()=> {
+    _analyzing = true;
+    const ocrResult = _state.analyzableImage.analizeOcr(pos);
+    return ocrResult;
+  }).then(function (ocrResult) {
+    _analyzing = false;
+    _state.ocrResult = ocrResult;
+  }).catch(function () {
+    _analyzing = false;
+    return Promise.reject();
+  });
 }
 
 const AnalyzeViewerStore = assign({}, EventEmitter.prototype, {
@@ -51,13 +66,26 @@ const AnalyzeViewerStore = assign({}, EventEmitter.prototype, {
     this.emit(CHANGE_EVENT);
   },
 
+  emitFailOcr: function() {
+    this.emit(FAIL_OCR_EVENT);
+  },
+
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  addFailOcrListener: function(callback) {
+    this.on(FAIL_OCR_EVENT, callback);
+  },
+
+  removeFailOcrListener: function(callback) {
+    this.removeListener(FAIL_OCR_EVENT, callback);
   }
+
 });
 
 AppDispatcher.register(function(action) {
@@ -78,8 +106,11 @@ AppDispatcher.register(function(action) {
     break;
 
   case AnalyzableViewerConstants.ANALYZE_OCR:
-    analyzeOcr(action.pos);
-    AnalyzeViewerStore.emitChange();
+    analyzeOcr(action.pos).then(function() {
+      AnalyzeViewerStore.emitChange();
+    }).catch(function() {
+      AnalyzeViewerStore.emitFailOcr();
+    });
     break;
 
   default:

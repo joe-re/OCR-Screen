@@ -13,36 +13,27 @@ function getState() {
 class AnalizableViewer extends React.Component {
   componentDidMount() {
     AnalyzableViewerStore.addChangeListener(this._onChange.bind(this));
+    AnalyzableViewerStore.addFailOcrListener(this._onFailOcr.bind(this));
   }
 
   componentWillUnmount() {
     AnalyzableViewerStore.removeChangeListener(this._onChange.bind(this));
+    AnalyzableViewerStore.removeFailOcrListener(this._onFailOcr.bind(this));
   }
 
   _onChange() {
     this.setState(getState());
   }
 
+  _onFailOcr() {
+    window.alert('OCR failed. Please try again after triming image.');
+    window.location.reload(); // This is to resolve OCRAD of memory leak error.I haven't been able to find the cause and solution...
+  }
+
   constructor(props) {
     super(props);
     this.state = getState();
     AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
-  }
-
-  handleImageClicked(pos) {
-    if (this.analyzing) { return; }
-    Promise.resolve().then(()=> {
-      this.analyzing = true;
-      let ocrResult = this.state.analyzableImage.analizeOcr(pos);
-      return ocrResult;
-    }).then((ocrResult)=> {
-      this.setState({ocrResult: ocrResult});
-    }).catch(()=> {
-      window.alert('OCR failed. Please try again after triming image.');
-      window.location.reload(); // This is to resolve OCRAD of memory leak error.I haven't been able to find the cause and solution...
-    }).then(()=>{
-      this.analyzing = false;
-    });
   }
 
   handleImageChanged(imageUrl) {
@@ -59,7 +50,7 @@ class AnalizableViewer extends React.Component {
       <div>
         <OcrResultView ocrResault={this.state.ocrResult}></OcrResultView>
         <ColorPicker color={this.state.color}></ColorPicker>
-        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)} handleImageClicked={this.handleImageClicked.bind(this)}></ImageView>
+        <ImageView image={this.state.image} handleImageChanged={this.handleImageChanged.bind(this)}></ImageView>
       </div>
     );
   }

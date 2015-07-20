@@ -28,7 +28,7 @@ class ImageView extends React.Component {
   clickHandler(e) {
     e = e.nativeEvent;
     let pos = { x: parseInt(e.offsetX), y: parseInt(e.offsetY) };
-    this.props.handleImageClicked(pos);
+    AnalyzableViewerAction.analyzeOcr(pos);
   }
 
   render() {
