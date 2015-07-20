@@ -23,6 +23,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "flux": "^2.0.3",
     "jcrop": "0.0.1",
     "jquery": "^2.1.4",
     "ocrad.js": "0.0.1",
