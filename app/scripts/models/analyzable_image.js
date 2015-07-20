@@ -26,7 +26,8 @@ class AnalyzableImage {
   analyze(canvas, img) {
     let context = canvas.getContext('2d');
     context.drawImage(img, 0, 0);
-    return context.getImageData(0, 0, img.width, img.height).data;
+    const data = img.width > 0 ? context.getImageData(0, 0, img.width, img.height).data : [];
+    return data;
   }
 
   createCanvas(img) {

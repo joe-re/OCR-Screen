@@ -33,7 +33,19 @@ class AnalyzableViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = getState();
-    AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
+    Promise.resolve().then(() => this.getImage(this.props.id));
+  }
+
+  getImage(id) {
+    chrome.runtime.sendMessage(id, (response) => {
+      if(response === null) {
+        window.setTimeout(() => {
+          this.getImage(id)
+        }, 1000);
+      } else {
+        AnalyzableViewerAction.updateImage(response.url);
+      }
+    });
   }
 
   render() {

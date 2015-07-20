@@ -6,8 +6,8 @@ import Color from '../models/color';
 import assign from 'object-assign';
 
 let _state = {
-  image: null,
-  analyzableImage: null,
+  image: new Image(),
+  analyzableImage: new AnalyzableImage(new Image()),
   pos: {x: 0, y: 0},
   ocrResult: '',
   color: new Color()
