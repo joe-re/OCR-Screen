@@ -33,8 +33,10 @@ class ImageView extends React.Component {
     };
     return (
       <div>
-        <div className='message'>Please Click on Character!</div>
-        <button className='trim-button' onClick={this.trimStart.bind(this)}>Trim Image</button>
+        <div className='head-content'>
+          <div className='message'>Please Click on Character!</div>
+          <button className='button trim-button' onClick={this.trimStart.bind(this)}>Trim Image</button>
+        </div>
         <div className='image-view'>
           <img src={this.props.image.src} onMouseMove={this.mouseMoveHandler.bind(this)} onClick={this.clickHandler.bind(this)} style={style} ref="image"></img>
         </div>

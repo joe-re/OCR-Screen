@@ -18,9 +18,11 @@
         margin-top: 20px;
       }
       .head-line {
+        display: inline-block;
         font-weight: 300;
         font-size: 2.3125rem;
         line-height: 1.4;
+        vertical-align: middle;
       }
       .ocr-result {
         width: 100%;
@@ -39,16 +41,16 @@
         font-weight: 300;
         font-size: 1.3125rem;
       }
-      .trim-button {
-        margin: 0 1em;
-        float: right;
+      .head-content {
+        margin: 1em 1em 0 1em;
+      }
+      .button {
         border-radius: 2px;
         border-style: solid;
         border-width: 0;
         cursor: pointer;
         font-weight: normal;
         line-height: normal;
-        position: relative;
         text-decoration: none;
         text-align: center;
         display: inline-block;
@@ -62,9 +64,16 @@
         color: #FFFFFF;
         transition: background-color 300ms;
       }
-      .trim-button:hover {
+      .button:hover {
         background-color: #005469;;
       }
+      .copy-button {
+        margin-left: 20px;
+      }
+      .trim-button {
+        float: right;
+      }
+
     </style>
   </head>
   <body>
