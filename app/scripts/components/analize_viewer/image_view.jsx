@@ -45,7 +45,6 @@ class ImageView extends React.Component {
       </div>
     );
   }
-
 }
 
 export default ImageView;
