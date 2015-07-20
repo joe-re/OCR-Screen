@@ -29,10 +29,6 @@ class AnalizableViewer extends React.Component {
     AnalyzableViewerAction.updateImage(this.props.initialImageUrl);
   }
 
-  handlePosChanged(pos) {
-    this.setState({pos: pos});
-  }
-
   handleImageClicked(pos) {
     if (this.analyzing) { return; }
     Promise.resolve().then(()=> {

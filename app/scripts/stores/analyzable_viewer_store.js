@@ -30,6 +30,7 @@ function cropImage(c) {
 }
 
 function changePos(pos) {
+  _state.pos = pos;
 }
 
 function analyzeOcr(pos) {

@@ -22,7 +22,7 @@ class ImageView extends React.Component {
   mouseMoveHandler(e) {
     e = e.nativeEvent;
     let pos = { x: parseInt(e.offsetX), y: parseInt(e.offsetY) };
-    this.props.handlePosChanged(pos);
+    AnalyzableViewerAction.changePos(pos);
   }
 
   clickHandler(e) {
