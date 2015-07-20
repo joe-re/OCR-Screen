@@ -1,12 +1,6 @@
 import React from 'react';
 
 class OcrResultView extends React.Component {
-  createCanvas(image) {
-    let canvas = document.createElement('canvas');
-    canvas.height = image.height;
-    canvas.width = image.width;
-    return canvas;
-  }
   render() {
     let style = { display: 'none' };
     return (
